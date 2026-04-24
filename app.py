@@ -91,7 +91,7 @@ def listar_productos():
 
         cursor.execute("""
             SELECT TOP 20 id, nombre, precio, imagen_url
-            FROM productos
+            FROM ProductosAzure
             ORDER BY id DESC
         """)
         rows = cursor.fetchall()
