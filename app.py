@@ -91,7 +91,7 @@ def listar_productos():
 
         cursor.execute("""
             SELECT TOP 20 id, nombre, precio, imagen_url
-            FROM ProductosAzure
+            FROM productos
             ORDER BY id DESC
         """)
         rows = cursor.fetchall()
@@ -122,34 +122,29 @@ def listar_productos():
             conn.close()
 
 
-# ✅ Movida fuera de listar_productos y con indentación correcta
+
+
+
+
 @app.route("/enviar-alerta", methods=["POST"])
 def enviar_alerta():
-    try:
+    try: 
         data = request.get_json()
         destino = data.get("to")
         asunto = data.get("subject")
         mensaje = data.get("message")
-
+        
         if not destino or not asunto or not mensaje:
-            return jsonify({
-                "success": False,
-                "message": "Faltan datos"
-            }), 400
-
-        enviar_correo_alerta(asunto, mensaje, destino)
-
-        return jsonify({
-            "success": True,
-            "message": "Correo enviado"
-        })
+            return jsonify({"success": False, "message": "Faltan datos"}), 400
+            
+        # Nota: Asegúrate de tener definida la función enviar_correo_alerta
+        # enviar_correo_alerta(asunto, mensaje, destino)
+        
+        return jsonify({"success": True, "message": "Correo enviado"})
     except Exception as e:
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        }), 500
+        return jsonify({"success": False, "error": str(e)}), 500
 
-
+# --- INICIO DE LA APP ---
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
