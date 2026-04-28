@@ -121,7 +121,7 @@ def listar_productos():
         if conn:
             conn.close()
 
-    @app.route("/enviar-alerta", methods=["POST"]) Práctica
+    @app.route("/enviar-alerta", methods=["POST"])
     def enviar_alerta():
     try:
     data = request.get_json()
